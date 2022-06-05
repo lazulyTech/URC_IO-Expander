@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "TB6612FNG")(type "KiCad")(uri "${KIPRJMOD}/../ExternalLib/TB6612FNG/TB6612FNG.pretty")(options "")(descr ""))
+  (lib (name "ADUM140D0BRZ")(type "KiCad")(uri "${KIPRJMOD}/../ExternalLib/ADUM140D0BRZ/ADUM140D0BRZ.pretty")(options "")(descr ""))
+)
