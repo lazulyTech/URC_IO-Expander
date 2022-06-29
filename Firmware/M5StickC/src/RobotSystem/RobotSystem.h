@@ -7,8 +7,6 @@
 #include "io/AnalogIn.h"
 #include "io/Motor.h"
 
-extern bool test;
-
 class RobotSystem{
 public:
     MCP23017* dio;
