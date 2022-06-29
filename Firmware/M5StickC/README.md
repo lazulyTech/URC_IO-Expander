@@ -52,7 +52,7 @@ bool urc::test をtrueにした時の動き．上の関数は実行されない�
 
 - pwm PWM出力
 
-    ### pwm->analogWrite(int pin, int duty)
+    - pwm->analogWrite(int pin, int duty)
 
     pinで指定したPWMピンから，duty/4095 のduty比でPWM波を出力する．dutyの最大値は4095．
 
