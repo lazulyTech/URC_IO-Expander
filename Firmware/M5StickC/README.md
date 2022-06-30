@@ -32,7 +32,7 @@ bool urc::test をtrueにした時の動き．上の関数は実行されない�
 
 # 入出力
 
-- dio デジタル入出力
+- **dio デジタル入出力**
 
     - dio->pinMode(int pin, int status)
 
@@ -50,19 +50,19 @@ bool urc::test をtrueにした時の動き．上の関数は実行されない�
 
     pinで指定したデジタルピンの入力状態を取得する．
 
-- pwm PWM出力
+- **pwm PWM出力**
 
     - pwm->analogWrite(int pin, int duty)
 
     pinで指定したPWMピンから，duty/4095 のduty比でPWM波を出力する．dutyの最大値は4095．
 
-- ain アナログ入力
+- **ain アナログ入力
 
     - ain->analogRead(int pin)
 
     pinで指定したアナログピンの入力状態を指定する．0Vから2.4Vまでしか測定できない．
 
-- motor モータ出力
+- **motor モータ出力**
 
     - motor[port]->move(int speed)
 
@@ -72,7 +72,7 @@ bool urc::test をtrueにした時の動き．上の関数は実行されない�
 
     portで指定したモータ出力ポートに繋がっているモータを止める．角度を止めるように停止する．
 
-- drive 駆動用モータ出力
+- **drive 駆動用モータ出力**
 
     2つのモータ出力ポートをまとめて動かすためのクラス
 
