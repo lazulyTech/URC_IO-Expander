@@ -8,10 +8,11 @@
 // Audio* audio;
 
 typedef struct test_struct {
-  int mode;
+    int id;
+    int mode;
 } test_struct;
 test_struct test;
-test_struct myData = {0};
+test_struct myData = {0, 0};
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     char macStr[18];
