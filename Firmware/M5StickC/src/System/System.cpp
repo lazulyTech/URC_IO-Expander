@@ -2,12 +2,18 @@
 #include <M5StickCPlus.h>
 
 EspNow* urc::espNow = new EspNow();
-MCP23017* urc::dio = NULL;
-MCP23017* urc::dio_internal = NULL;
-PCA9685* urc::pwm = NULL;
-AnalogIn* urc::ain = NULL;
-Send_struct urc::myData = {0};
-Motor* urc::motor[6] = {NULL};
+MCP23017* urc::dio = new MCP23017(MCP_ADDRESS);
+MCP23017* urc::dio_internal = new MCP23017(MCP_INTERNAL_ADDR);
+PCA9685* urc::pwm = new PCA9685(PCA_ADDRESS);
+int pinToAnalog[3] = {12,13,14};
+AnalogIn* urc::ain = new AnalogIn(ADC_ADDRESS, urc::dio_internal, pinToAnalog);
+Send_struct urc::myData = {0, 0}; // {team number, 0}
+Motor* urc::motor[6] = {(new Motor(urc::dio_internal, urc::pwm)),
+                        (new Motor(urc::dio_internal, urc::pwm)),
+                        (new Motor(urc::dio_internal, urc::pwm)),
+                        (new Motor(urc::dio_internal, urc::pwm)),
+                        (new Motor(urc::dio_internal, urc::pwm)),
+                        (new Motor(urc::dio_internal, urc::pwm))};
 
 void espNow_func::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     char macStr[18];
@@ -37,13 +43,34 @@ System::System(EspNow* _espNow, MCP23017* _dio, MCP23017* _dio_internal, PCA9685
 void System::SystemInit(){
     M5.begin();
     M5.Lcd.fillScreen(WHITE);
-
     Wire.begin(32,33);
-    Serial.println("Wire begin");
+
     system_espNow = new EspNow;
     system_espNow->Init<esp_now_recv_cb_t>(RECEIVER, espNow_func::OnDataRecv);
-    Serial.println("EspInit");
-    // robot = new RobotSystem(system_dio, system_pwm, system_ain, system_motor);
+
+    for(int i = 0; i < 16; i++){
+        system_dio_internal->pinMode(i, OUTPUT);
+    }
+    system_dio_internal->Init();
+    // Serial.println("dio_internal Init");
+
+    system_pwm->Init();
+    system_pwm->setPWMFreq();
+    // Serial.println("pwm Init");
+
+    system_ain->Init();
+    // Serial.println("ain Init");
+    
+    for (int i = 0; i < 6; i++){
+        system_motor[i]->setPins(2*i, 2*i+1, i);
+        // Serial.print("motor ");
+        // Serial.print(i);
+        // Serial.println(" Init");
+    }
+    robot->RobotInit();
+    if(urc::test){
+        robot->TestInit();
+    }
 }
 void System::SystemPeriodic(){
     M5.update();

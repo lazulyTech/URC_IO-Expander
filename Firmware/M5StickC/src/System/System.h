@@ -10,13 +10,14 @@
 #include "io/Motor.h"
 #include "RobotSystem/RobotSystem.h"
 
-#define MCP_ADDRESS 0x20
+#define MCP_ADDRESS 0x22
 #define MCP_INTERNAL_ADDR 0x21
 #define PCA_ADDRESS 0x40
 #define ADC_ADDRESS 0x68
 
 typedef struct send_struct {
-  int mode;
+    int id; // team number
+    int mode;
 } Send_struct;
 
 typedef struct state {
