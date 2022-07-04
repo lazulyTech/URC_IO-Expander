@@ -205,7 +205,7 @@ Temporary Items
 .piolibdeps
 .clang_complete
 .gcc-flags.json
-.pio/build
+.pio
 
 ### Vim ###
 # Swap
