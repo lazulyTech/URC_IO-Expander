@@ -1,0 +1,6 @@
+[submodule "EspNow"]
+	path = EspNow
+	url = git@github.com:lazulyTech/EspNow.git
+[submodule "PS4-esp32"]
+	path = PS4-esp32
+	url = git@github.com:lazulyTech/PS4-esp32.git
