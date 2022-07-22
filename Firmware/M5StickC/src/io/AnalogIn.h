@@ -7,7 +7,7 @@
 class AnalogIn{
 private:
     uint8_t deviceAddress;
-    int doutPins[3] = {12, 13, 14};
+    int doutPins[3] = {13, 14, 15};
     MCP23017* channel;
     MCP3425* adc;
 public:

@@ -10,8 +10,8 @@
 #include "io/Motor.h"
 #include "RobotSystem/RobotSystem.h"
 
-#define MCP_ADDRESS 0x22
-#define MCP_INTERNAL_ADDR 0x21
+#define MCP_ADDRESS 0x21
+// #define MCP_INTERNAL_ADDR 0x21
 #define PCA_ADDRESS 0x40
 #define ADC_ADDRESS 0x68
 
@@ -29,10 +29,11 @@ typedef struct state {
 
 namespace urc{
     extern bool test;
+    extern int teamNumber;
 
     extern EspNow* espNow;
     extern MCP23017* dio;
-    extern MCP23017* dio_internal;
+    // extern MCP23017* dio_internal;
     extern PCA9685* pwm;
     extern AnalogIn* ain;
     extern Send_struct myData;
@@ -51,7 +52,7 @@ private:
 
     EspNow* system_espNow;
     MCP23017* system_dio;
-    MCP23017* system_dio_internal;
+    // MCP23017* system_dio_internal;
     PCA9685* system_pwm;
     AnalogIn* system_ain;
 
@@ -60,7 +61,7 @@ private:
     Motor* system_motor[6];
 
 public:
-    System(EspNow*, MCP23017*, MCP23017*, PCA9685*, AnalogIn*, Motor*[], RobotSystem*);
+    System(EspNow*, MCP23017*, PCA9685*, AnalogIn*, Motor*[], RobotSystem*);
     void SystemInit();
     void SystemPeriodic();
 };

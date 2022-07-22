@@ -6,12 +6,12 @@
 
 class Motor {
 private:
-    MCP23017* dio_mot;
+    // MCP23017* dio_mot;
     PCA9685* pwm_mot;
-    int pin[3];
+    int pin[2];
 public:
-    Motor(MCP23017* dio_, PCA9685* pwm_);
-    void setPins(int dinA, int dinB, int pwmPin);
+    Motor(PCA9685* pwm_);
+    void setPins(int pwmPinA, int pwmPinB);
     void move(int speed);
     void stop();
 };

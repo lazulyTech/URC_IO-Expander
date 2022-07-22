@@ -1,4 +1,5 @@
-
+Address.h
+.cache
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux,visualstudiocode,clion,vim,platformio,kicad
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux,visualstudiocode,clion,vim,platformio,kicad
 
@@ -118,7 +119,7 @@ fabric.properties
 ### KiCad ###
 # For PCBs designed using KiCad: https://www.kicad.org/
 # Format documentation: https://kicad.org/help/file-formats/
-
+Output
 # Temporary files
 *.000
 *.bak

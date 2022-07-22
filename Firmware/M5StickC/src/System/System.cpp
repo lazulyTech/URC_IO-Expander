@@ -3,17 +3,17 @@
 
 EspNow* urc::espNow = new EspNow();
 MCP23017* urc::dio = new MCP23017(MCP_ADDRESS);
-MCP23017* urc::dio_internal = new MCP23017(MCP_INTERNAL_ADDR);
+// MCP23017* urc::dio_internal = new MCP23017(MCP_INTERNAL_ADDR);
 PCA9685* urc::pwm = new PCA9685(PCA_ADDRESS);
 int pinToAnalog[3] = {12,13,14};
-AnalogIn* urc::ain = new AnalogIn(ADC_ADDRESS, urc::dio_internal, pinToAnalog);
-Send_struct urc::myData = {0, 0}; // {team number, 0}
-Motor* urc::motor[6] = {(new Motor(urc::dio_internal, urc::pwm)),
-                        (new Motor(urc::dio_internal, urc::pwm)),
-                        (new Motor(urc::dio_internal, urc::pwm)),
-                        (new Motor(urc::dio_internal, urc::pwm)),
-                        (new Motor(urc::dio_internal, urc::pwm)),
-                        (new Motor(urc::dio_internal, urc::pwm))};
+AnalogIn* urc::ain = new AnalogIn(ADC_ADDRESS, urc::dio, pinToAnalog);
+Send_struct urc::myData = {0, 0};
+Motor* urc::motor[6] = {(new Motor(urc::pwm)),
+                        (new Motor(urc::pwm)),
+                        (new Motor(urc::pwm)),
+                        (new Motor(urc::pwm)),
+                        (new Motor(urc::pwm)),
+                        (new Motor(urc::pwm))};
 
 void espNow_func::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     char macStr[18];
@@ -26,13 +26,15 @@ void espNow_func::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t stat
     Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
 void espNow_func::OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
-    memcpy(&urc::myData, incomingData, sizeof(urc::myData));
+    Send_struct buf;
+    memcpy(&buf, incomingData, sizeof(buf));
+    if(buf.id == 0 || buf.id == urc::teamNumber) urc::myData = buf;
 }
 
-System::System(EspNow* _espNow, MCP23017* _dio, MCP23017* _dio_internal, PCA9685* _pwm, AnalogIn* _ain, Motor* _motor[], RobotSystem* _robot){
+System::System(EspNow* _espNow, MCP23017* _dio, PCA9685* _pwm, AnalogIn* _ain, Motor* _motor[], RobotSystem* _robot){
     system_espNow = _espNow;
     system_dio = _dio;
-    system_dio_internal = _dio_internal;
+    // system_dio_internal = _dio_internal;
     system_pwm = _pwm;
     system_ain = _ain;
     for(int i=0; i<6; i++){
@@ -48,21 +50,21 @@ void System::SystemInit(){
     system_espNow = new EspNow;
     system_espNow->Init<esp_now_recv_cb_t>(RECEIVER, espNow_func::OnDataRecv);
 
-    for(int i = 0; i < 16; i++){
-        system_dio_internal->pinMode(i, OUTPUT);
+    for(int i = 13; i < 16; i++){
+        system_dio->pinMode(i, OUTPUT);
     }
-    system_dio_internal->Init();
+    // system_dio_internal->Init();
     // Serial.println("dio_internal Init");
 
     system_pwm->Init();
-    system_pwm->setPWMFreq();
+    system_pwm->setPWMFreq(1000);
     // Serial.println("pwm Init");
 
     system_ain->Init();
     // Serial.println("ain Init");
     
     for (int i = 0; i < 6; i++){
-        system_motor[i]->setPins(2*i, 2*i+1, i);
+        system_motor[i]->setPins(2*i +4, 2*i +5);
         // Serial.print("motor ");
         // Serial.print(i);
         // Serial.println(" Init");
