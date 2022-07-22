@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name "TB6612FNG")(type "Legacy")(uri "${KIPRJMOD}/../ExternalLib/TB6612FNG/TB6612FNG.lib")(options "")(descr ""))
+  (lib (name "ADUM140D0BRZ")(type "Legacy")(uri "${KIPRJMOD}/../ExternalLib/ADUM140D0BRZ/ADUM140D0BRZ.lib")(options "")(descr ""))
+  (lib (name "TB67H450FNG")(type "Legacy")(uri "${KIPRJMOD}/../ExternalLib/TB67H450FNG/TB67H450FNG.lib")(options "")(descr ""))
+)
